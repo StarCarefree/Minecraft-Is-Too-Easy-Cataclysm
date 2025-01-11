@@ -7,9 +7,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
 
 public class PlayerFoodValue implements IPlayerFoodValue{
-    private int protein, phytonutrients, insulinResistance;
+    private final int MAX_PROTEIN = 160000, MAX_PHYTONUTRIENTS = 160000, MAX_INSULIN_RESISTANCE = 192000;
 
-    public final int MAX_PROTEIN = 160000, MAX_PHYTONUTRIENTS = 160000, MAX_INSULIN_RESISTANCE = 192000;
+    private int protein=MAX_PROTEIN, phytonutrients=MAX_PHYTONUTRIENTS, insulinResistance=0, maxFoodLevel=6;
+
+    @Override
+    public int getMaxFoodLevel() {
+        return maxFoodLevel;
+    }
+
+    @Override
+    public void setMaxFoodLevel(int maxFoodLevel) {
+        this.maxFoodLevel = maxFoodLevel;
+    }
 
     @Override
     public int getProtein() {
@@ -47,6 +57,7 @@ public class PlayerFoodValue implements IPlayerFoodValue{
         compoundTag.putInt("insulinResistance", insulinResistance);
         compoundTag.putInt("phytonutrients", phytonutrients);
         compoundTag.putInt("protein", protein);
+        compoundTag.putInt("maxFoodLevel", maxFoodLevel);
         return compoundTag;
     }
 
@@ -55,5 +66,6 @@ public class PlayerFoodValue implements IPlayerFoodValue{
         insulinResistance = nbt.getInt("insulinResistance");
         phytonutrients = nbt.getInt("phytonutrients");
         protein = nbt.getInt("protein");
+        maxFoodLevel = nbt.getInt("maxFoodLevel");
     }
 }

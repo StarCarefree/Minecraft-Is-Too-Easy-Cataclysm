@@ -1,14 +1,16 @@
 {
-    "required": true,
-    "package": "com.starkettle.mite_ctm.mixin",
-    "compatibilityLevel": "JAVA_21",
-    "minVersion": "0.8",
-    "client": [
-    ],
-    "mixins": [
-    ],
-    "injectors": {
-      "defaultRequire": 1
-    }
+  "required": true,
+  "package": "com.starkettle.mite_ctm.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "client": [
+    "GuiMixin"
+  ],
+  "mixins": [
+    "PlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
   }
   

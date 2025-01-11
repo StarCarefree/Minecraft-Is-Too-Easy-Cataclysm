@@ -4,6 +4,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
+    //获取最大饥饿度
+    int getMaxFoodLevel();
+    //设置最大饥饿度
+    void setMaxFoodLevel(int maxFoodLevel);
     //获取蛋白质值
     int getProtein();
     //获取植物营养素值
@@ -22,8 +26,11 @@ public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
         setPhytonutrients(phytonutrients);
         setInsulinResistance(insulinResistance);
     }
+    default void increaseAll(int protein, int phytonutrients, int insulinResistance){
+        setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResistance()+insulinResistance);
+    }
     //将所有值减1
-    default void decreaseAll(){
+    default void decrease1All(){
         setAll(getProtein()-1, getPhytonutrients()-1, getInsulinResistance()-1);
     }
 }

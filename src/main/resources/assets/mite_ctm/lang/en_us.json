@@ -1,5 +1,3 @@
 {
-  "itemGroup.mite_ctm": "Example Mod Tab",
-  "block.mite_ctm.example_block": "Example Block",
-  "item.mite_ctm.example_item": "Example Item"
+  "command.mite_ctm.stats": "§b§l[MITE-CTM]Game Stats:\n§aPlayer Name:%s\n§cUUID:%s\n§7----------------\n§6Experience Level:%s\n§6Total Experience:%s\n§7----------------\n§2Phytonutrients:%s\n§eProtein:%s"
 }
