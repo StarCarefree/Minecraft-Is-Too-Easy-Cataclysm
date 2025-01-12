@@ -28,6 +28,7 @@ public enum BlockProperties {
     lava(10000f),
     sand(40f),
     gravel(60f),
+    //TODO:剩下的方块
 
     //MITE-CTM方块
     //TODO:MITE-CTM方块
