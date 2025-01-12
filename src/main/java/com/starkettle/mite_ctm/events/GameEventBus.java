@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @EventBusSubscriber(modid = MinecraftIsTooEasyCataclysm.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class GameEventBus {
@@ -36,11 +37,15 @@ public class GameEventBus {
     }
     @SubscribeEvent
     public static void canHarvest(PlayerEvent.HarvestCheck event){
+        boolean vanilla = event.canHarvest();
         event.setCanHarvest(false);
         if(event.getTargetBlock().requiresCorrectToolForDrops()){
+            AtomicInteger hav1 = new AtomicInteger(),hav2 = new AtomicInteger();
             Optional.ofNullable(event.getEntity().level().getCapability(ModCapabilities.BLOCK_HARVEST_LEVEL_HANDLER,event.getPos(),event.getTargetBlock(),null,null)).ifPresent(
-                    (cap)-> Optional.ofNullable(event.getEntity().getMainHandItem().getCapability(ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER)).ifPresent(
-                            (cap2)-> event.setCanHarvest(cap.getHarvestLevel()<=cap2.getHarvestLevel())));
+                    (cap)-> hav1.set(cap.getHarvestLevel()));
+            Optional.ofNullable(event.getEntity().getMainHandItem().getCapability(ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER)).ifPresent(
+                    (cap2)-> hav2.set(cap2.getHarvestLevel()));
+            event.setCanHarvest(hav1.get()<=hav2.get()&&vanilla);
         }
     }
 }
