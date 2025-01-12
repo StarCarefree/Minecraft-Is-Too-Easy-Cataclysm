@@ -45,7 +45,7 @@ public class GameEventBus {
         else if(player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
             player.heal(1.0F);
         }
-        if(!player.level().isClientSide()&&player.containerMenu instanceof CraftingMenu menu){
+        if(player.containerMenu instanceof CraftingMenu menu){
             ((ITick)menu).tick();
         }
     }

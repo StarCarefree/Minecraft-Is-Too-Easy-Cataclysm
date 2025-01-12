@@ -1,7 +1,6 @@
 package com.starkettle.mite_ctm.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.items.CraftingDifficultyProperties;
 import com.starkettle.mite_ctm.utils.ITick;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
@@ -44,14 +43,14 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu implements 
     @Unique
     @Override
     public void tick(){
-        if(!this.placingRecipe && this.player instanceof ServerPlayer serverPlayer){
+        if(!this.placingRecipe){
             if (resultItemStack.getCount() != 0) {
                 craftTickCount++;
                 if (craftTickCount >= craftingTicks) {
-                    setResultItemStack(resultItemStack, serverPlayer, (CraftingMenu) (Object) this);
+                    if(this.player instanceof ServerPlayer serverPlayer){
+                        setResultItemStack(resultItemStack.copy(), serverPlayer, (CraftingMenu) (Object) this);
+                    }
                     craftTickCount=0;
-                    craftingTicks=0;
-                    resultItemStack=ItemStack.EMPTY;
                 }
             }
         }
