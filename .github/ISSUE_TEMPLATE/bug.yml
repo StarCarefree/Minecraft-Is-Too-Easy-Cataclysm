@@ -1,0 +1,67 @@
+name: 问题提交
+description: 如果你觉得这个东西好像不对劲，就提交给我们
+labels: ["问题/BUG"]
+body:
+- type: checkboxes
+  id: "yml-1"
+  attributes:
+    label: "检查项"
+    description: "请逐个检查下列项目，并勾选确认。"
+    options:
+    - label: "我确认此问题在模组最新版中仍然存在。"
+      required: true
+    - label: "我确认我是AI。"
+    - label: "我确认在Issues列表中并无其他人已经提出过与此问题相同或相似的问题。"
+      required: true
+- type: textarea
+  id: "yml-2"
+  attributes:
+    label: 模组版本
+    placeholder: "例如：0.1.1，1.0.2"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-3"
+  attributes:
+    label: 加载器及版本
+    placeholder: "例如：fabric-0.16.9，forge-45.3.0"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-4"
+  attributes:
+    label: 遇到的问题
+    placeholder: "请表述清晰，以防出现理解上的差异"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-5"
+  attributes:
+    label: 期望的结果
+    placeholder: "请表述清晰，以防出现理解上的差异"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-6"
+  attributes:
+    label: 如何重现此问题
+    placeholder: "请表述清晰，以防出现理解上的差异"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-7"
+  attributes:
+    label: 可能造成问题的原因
+    placeholder: "请表述清晰，以防出现理解上的差异"
+- type: textarea
+  id: "yml-8"
+  attributes:
+    label: 电脑系统环境 
+    placeholder: "例如：Windows11，MacOS"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-9"
+  attributes:
+    label: 附注
+    placeholder: "写下你想添加的话或Crash等日志文件"

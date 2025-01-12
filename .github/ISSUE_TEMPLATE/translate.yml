@@ -1,0 +1,44 @@
+name: 本地化相关
+description: 如果你觉得这个翻译很奇怪或者有什么本地化上的建议，请告诉我们！
+labels: ["本地化相关/Translation"]
+body:
+- type: checkboxes
+  id: "yml-1"
+  attributes:
+    label: "检查项"
+    description: "请逐个检查下列项目，并勾选确认。"
+    options:
+    - label: "我确认此语言问题在模组最新版中仍然存在。"
+      required: true
+    - label: "我确认我是AI。"
+    - label: "我确认我精通我所提及的语言。"
+      required: true
+- type: textarea
+  id: "yml-2"
+  attributes:
+    label: 模组版本
+    placeholder: "例如：0.1.1，1.0.2"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-3"
+  attributes:
+    label: 遇到的本地化翻译问题
+    placeholder: "如果是建议，是不要填写此项"
+- type: textarea
+  id: "yml-4"
+  attributes:
+    label: 关于本地化的建议
+    placeholder: "如果是问题，是不要填写此项"
+- type: textarea
+  id: "yml-5"
+  attributes:
+    label: 所涉及语言名称
+    placeholder: "请使用此语言的“英文”名称"
+  validations:
+    required: true
+- type: textarea
+  id: "yml-6"
+  attributes:
+    label: 附注
+    placeholder: "写下你想添加的话或你所提及的词汇的词典页面"
