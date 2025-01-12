@@ -27,3 +27,9 @@ jobs:
         run: |
           chmod +x gradlew
           ./gradlew build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mite-ctm-mod-jars
+          path: build/libs/mite_ctm-*.jar
