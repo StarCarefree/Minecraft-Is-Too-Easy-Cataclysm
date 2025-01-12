@@ -1,3 +1,5 @@
 {
-  "command.mite_ctm.stats": "§b§l[MITE-CTM]Game Stats:\n§aPlayer Name:%s\n§cUUID:%s\n§7----------------\n§6Experience Level:%s\n§6Total Experience:%s\n§7----------------\n§2Phytonutrients:%s\n§eProtein:%s"
+  "mite_ctm.mod_name": "Minecraft Is Too Easy:Cataclysm",
+  "command.mite_ctm.stats": "§b§l[MITE-CTM]\nGame Stats:\n§aPlayer Name:%s\n§cUUID:%s\n§7----------------\n§6Experience Level:%s\n§6Total Experience:%s\n§7----------------\n§2Phytonutrients:%s\n§eProtein:%s",
+  "key.mite_ctm.zoom": "Zoom"
 }
