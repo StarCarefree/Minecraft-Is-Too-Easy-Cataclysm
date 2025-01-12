@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.Optional;
@@ -31,8 +32,15 @@ public class GameEventBus {
     @SubscribeEvent
     public static void onCommandsRegistering(RegisterCommandsEvent event){
         CommandDispatcher<CommandSourceStack> dispatcher=event.getDispatcher();
-        dispatcher.register(Commands.literal(MinecraftIsTooEasyCataclysm.MOD_ID).then(
-                Commands.literal("stats").executes(StatsCommand.INSTANCE)
-        ));
+        dispatcher.register(Commands.literal("stats").executes(StatsCommand.INSTANCE));
+    }
+    @SubscribeEvent
+    public static void canHarvest(PlayerEvent.HarvestCheck event){
+        event.setCanHarvest(false);
+        if(event.getTargetBlock().requiresCorrectToolForDrops()){
+            Optional.ofNullable(event.getEntity().level().getCapability(ModCapabilities.BLOCK_HARVEST_LEVEL_HANDLER,event.getPos(),event.getTargetBlock(),null,null)).ifPresent(
+                    (cap)-> Optional.ofNullable(event.getEntity().getMainHandItem().getCapability(ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER)).ifPresent(
+                            (cap2)-> event.setCanHarvest(cap.getHarvestLevel()<=cap2.getHarvestLevel())));
+        }
     }
 }

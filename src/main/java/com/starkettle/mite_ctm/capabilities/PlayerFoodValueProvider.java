@@ -9,10 +9,10 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 
-public class PlayerFoodValueProvider implements ICapabilityProvider<Player,Void,PlayerFoodValue>, INBTSerializable<CompoundTag> {
-    private PlayerFoodValue foodValue = null;
+public class PlayerFoodValueProvider implements ICapabilityProvider<Player,Void,IPlayerFoodValue>, INBTSerializable<CompoundTag> {
+    private IPlayerFoodValue foodValue = null;
 
-    private PlayerFoodValue getOrCreatePlayerFoodValue(){
+    private IPlayerFoodValue getOrCreatePlayerFoodValue(){
         if(this.foodValue == null){
             foodValue = new PlayerFoodValue();
         }
@@ -20,7 +20,7 @@ public class PlayerFoodValueProvider implements ICapabilityProvider<Player,Void,
     }
 
     @Override
-    public @Nullable PlayerFoodValue getCapability(@NotNull Player object, Void context) {
+    public @Nullable IPlayerFoodValue getCapability(@NotNull Player object, Void context) {
         return getOrCreatePlayerFoodValue();
     }
 

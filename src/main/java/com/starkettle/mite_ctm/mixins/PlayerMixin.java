@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Player.class)
-public class PlayerMixin {
+public abstract class PlayerMixin {
     @Shadow public int experienceLevel;
 
     @Inject(method = "getXpNeededForNextLevel", at = @At("HEAD"), cancellable = true)

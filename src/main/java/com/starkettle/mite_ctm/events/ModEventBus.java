@@ -1,12 +1,22 @@
 package com.starkettle.mite_ctm.events;
 
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
+import com.starkettle.mite_ctm.blocks.BlockProperties;
+import com.starkettle.mite_ctm.capabilities.BlockHarvestLevelProvider;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
 import com.starkettle.mite_ctm.capabilities.PlayerFoodValueProvider;
+import com.starkettle.mite_ctm.capabilities.ToolHarvestLevelProvider;
+import com.starkettle.mite_ctm.items.ToolProperties;
+import com.starkettle.mite_ctm.mixins.BlockBehaviourPropertiesAccessor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+
 @EventBusSubscriber(modid = MinecraftIsTooEasyCataclysm.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventBus {
     @SubscribeEvent
@@ -16,5 +26,30 @@ public class ModEventBus {
                 EntityType.PLAYER,
                 new PlayerFoodValueProvider()
         );
+
+        for (Block block : BuiltInRegistries.BLOCK){
+            try{
+                BlockProperties.valueOf(((BlockBehaviourPropertiesAccessor)block.properties()).getId().location().getPath());
+                event.registerBlock(
+                        ModCapabilities.BLOCK_HARVEST_LEVEL_HANDLER,
+                        new BlockHarvestLevelProvider(),
+                        block
+                );
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+
+        for(Item item:BuiltInRegistries.ITEM){
+            ItemStack itemStack=new ItemStack(item);
+            try{
+                ToolProperties.valueOf(itemStack.getItemHolder().getKey().location().getPath());
+                event.registerItem(
+                        ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER,
+                        new ToolHarvestLevelProvider(),
+                        item
+                );
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
     }
 }

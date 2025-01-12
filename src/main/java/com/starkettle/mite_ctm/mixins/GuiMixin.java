@@ -1,7 +1,7 @@
 package com.starkettle.mite_ctm.mixins;
 
+import com.starkettle.mite_ctm.capabilities.IPlayerFoodValue;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
-import com.starkettle.mite_ctm.capabilities.PlayerFoodValue;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
@@ -63,7 +63,7 @@ public abstract class GuiMixin {
 
             int l = x - j * 8 - 9;
 
-            Optional<PlayerFoodValue> optionalPlayerFoodValue = Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER));
+            Optional<IPlayerFoodValue> optionalPlayerFoodValue = Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER));
 
             if(optionalPlayerFoodValue.isPresent()){
                 if(Math.ceil(optionalPlayerFoodValue.get().getMaxFoodLevel()/2.0D)>j){

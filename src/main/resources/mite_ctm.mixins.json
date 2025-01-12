@@ -7,6 +7,8 @@
     "GuiMixin"
   ],
   "mixins": [
+    "BlockBehaviourMixin",
+    "BlockBehaviourPropertiesAccessor",
     "PlayerMixin"
   ],
   "injectors": {
