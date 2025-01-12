@@ -10,6 +10,7 @@ public class PlayerFoodValue implements IPlayerFoodValue{
     private final int MAX_PROTEIN = 160000, MAX_PHYTONUTRIENTS = 160000, MAX_INSULIN_RESISTANCE = 192000;
 
     private int protein=MAX_PROTEIN, phytonutrients=MAX_PHYTONUTRIENTS, insulinResistance=0, maxFoodLevel=6;
+    private float maxSaturationLevel=6f;
 
     @Override
     public int getMaxFoodLevel() {
@@ -19,6 +20,16 @@ public class PlayerFoodValue implements IPlayerFoodValue{
     @Override
     public void setMaxFoodLevel(int maxFoodLevel) {
         this.maxFoodLevel = maxFoodLevel;
+    }
+
+    @Override
+    public float getMaxSaturationLevel() {
+        return maxSaturationLevel;
+    }
+
+    @Override
+    public void setMaxSaturationLevel(float maxSaturationLevel) {
+        this.maxSaturationLevel=maxSaturationLevel;
     }
 
     @Override
@@ -58,6 +69,7 @@ public class PlayerFoodValue implements IPlayerFoodValue{
         compoundTag.putInt("phytonutrients", phytonutrients);
         compoundTag.putInt("protein", protein);
         compoundTag.putInt("maxFoodLevel", maxFoodLevel);
+        compoundTag.putFloat("maxSaturationLevel", maxSaturationLevel);
         return compoundTag;
     }
 
@@ -67,5 +79,6 @@ public class PlayerFoodValue implements IPlayerFoodValue{
         phytonutrients = nbt.getInt("phytonutrients");
         protein = nbt.getInt("protein");
         maxFoodLevel = nbt.getInt("maxFoodLevel");
+        maxSaturationLevel = nbt.getFloat("maxSaturationLevel");
     }
 }

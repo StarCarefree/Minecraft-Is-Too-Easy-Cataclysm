@@ -26,9 +26,18 @@ public class GameEventBus {
         Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER)).ifPresent((cap)->{
             cap.decrease1All();
             cap.setMaxFoodLevel(Mth.clamp(6+player.experienceLevel/5*2,0,20));
+            cap.setMaxSaturationLevel(Mth.clamp(6f+(float)player.experienceLevel/5*2,0f,20f));
             player.getFoodData().setFoodLevel(Mth.clamp(player.getFoodData().getFoodLevel(),0,cap.getMaxFoodLevel()));
+            player.getFoodData().setSaturation(Mth.clamp(player.getFoodData().getSaturationLevel(),0f,cap.getMaxSaturationLevel()));
         });
         player.getAttributes().getInstance(Attributes.MAX_HEALTH).setBaseValue(Math.min(20,6+player.experienceLevel/5*2));
+        if(player.getFoodData().getFoodLevel()==0F){
+            player.setSpeed(0.08F);
+        }
+        else{
+            player.setSpeed(0.1F);
+        }
+
     }
     @SubscribeEvent
     public static void onCommandsRegistering(RegisterCommandsEvent event){

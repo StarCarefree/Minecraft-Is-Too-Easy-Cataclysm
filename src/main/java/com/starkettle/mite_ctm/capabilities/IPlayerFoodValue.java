@@ -4,10 +4,14 @@ import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
-    //获取最大饥饿度
+    //获取最大饥饿值
     int getMaxFoodLevel();
-    //设置最大饥饿度
+    //设置最大饥饿值
     void setMaxFoodLevel(int maxFoodLevel);
+    //获取最大饱和度
+    float getMaxSaturationLevel();
+    //设置最大饱和度
+    void setMaxSaturationLevel(float maxSaturationLevel);
     //获取蛋白质值
     int getProtein();
     //获取植物营养素值
