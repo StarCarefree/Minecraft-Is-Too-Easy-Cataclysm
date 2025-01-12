@@ -1,0 +1,4 @@
+crowdin:
+- any:
+  - base-branch: 'Translate_crowdin'
+  - head-branch: 'Translate_crowdin'
