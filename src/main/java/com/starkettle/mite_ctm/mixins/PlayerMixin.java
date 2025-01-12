@@ -1,6 +1,5 @@
 package com.starkettle.mite_ctm.mixins;
 
-import com.starkettle.mite_ctm.capabilities.ModCapabilities;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,22 +29,9 @@ public abstract class PlayerMixin extends LivingEntity {
         cir.setReturnValue(10*(this.experienceLevel+1));
     }
 
-    @Inject(method = "aiStep", at = @At("HEAD"))
-    public void aiStepMixin(CallbackInfo ci){//每64秒回一滴血（直接用tick算的,mc到底有没有秒计数啊啊啊啊啊啊啊啊啊）
-        if(this.tickCount%(64*20)==0&&this.foodData.getFoodLevel()>=this.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
-            this.heal(1.0F);
-        }
-        else if(this.tickCount%(256*20)==0&&this.foodData.getFoodLevel()>=this.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
-            this.heal(1.0F);
-        }
-    }
-
     @Inject(method = "attack" ,at = @At("HEAD"),cancellable = true)
     public void attackMixin(Entity entity, CallbackInfo ci){//取消攻击
-        if (this.getHealth() <= 1.0F) {
-            ci.cancel();
-        }
-        if (this.foodData.getFoodLevel() <= 0) {
+        if (this.getHealth() <= 1.0F||this.foodData.getFoodLevel() <= 0) {
             ci.cancel();
         }
     }

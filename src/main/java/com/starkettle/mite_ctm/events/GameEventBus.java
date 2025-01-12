@@ -4,11 +4,13 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
 import com.starkettle.mite_ctm.commands.StatsCommand;
+import com.starkettle.mite_ctm.utils.ITick;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingMenu;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -37,7 +39,15 @@ public class GameEventBus {
         else{
             player.setSpeed(0.1F);
         }
-
+        if(player.tickCount%(64*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
+            player.heal(1.0F);
+        }
+        else if(player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
+            player.heal(1.0F);
+        }
+        if(!player.level().isClientSide()&&player.containerMenu instanceof CraftingMenu menu){
+            ((ITick)menu).tick();
+        }
     }
     @SubscribeEvent
     public static void onCommandsRegistering(RegisterCommandsEvent event){

@@ -10,7 +10,7 @@ import net.neoforged.fml.common.Mod;
 @Mod(MinecraftIsTooEasyCataclysm.MOD_ID)
 public class MinecraftIsTooEasyCataclysm {
     public static final String MOD_ID = "mite_ctm";
-    private static final Logger LOGGER = LogManager.getLogger("Minecraft Is Too Easy:Cataclysm");
+    public static final Logger LOGGER = LogManager.getLogger("Minecraft Is Too Easy:Cataclysm");
 
     public MinecraftIsTooEasyCataclysm(IEventBus modEventBus, ModContainer modContainer) {
         LOGGER.info("""

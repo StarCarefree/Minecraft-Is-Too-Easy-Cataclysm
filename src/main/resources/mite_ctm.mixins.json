@@ -10,6 +10,7 @@
   "mixins": [
     "BlockBehaviourMixin",
     "BlockBehaviourPropertiesAccessor",
+    "CraftingMenuMixin",
     "PlayerMixin"
   ],
   "injectors": {
