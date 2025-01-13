@@ -38,6 +38,11 @@ public abstract class PlayerMixin extends LivingEntity {
 
     }
 
+    @Inject(method = "isReducedDebugInfo", at = @At("RETURN"), cancellable = true)
+    public void isReducedDebugInfo(CallbackInfoReturnable<Boolean> cir){
+        cir.setReturnValue(true);
+    }
+
     @Inject(method = "attack" ,at = @At("HEAD"),cancellable = true)
     public void attackMixin(Entity entity, CallbackInfo ci){//取消攻击
         if (this.getHealth() <= 1.0F||this.foodData.getFoodLevel() <= 0) {
