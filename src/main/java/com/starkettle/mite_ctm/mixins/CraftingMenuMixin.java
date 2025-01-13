@@ -48,7 +48,7 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu implements 
                 craftTickCount++;
                 if (craftTickCount >= craftingTicks) {
                     if(this.player instanceof ServerPlayer serverPlayer){
-                        setResultItemStack(resultItemStack.copy(), serverPlayer, (CraftingMenu) (Object) this);
+                        setResultItemStack(resultItemStack.copy(), serverPlayer, this, this.resultSlots);
                     }
                     craftTickCount=0;
                 }
@@ -57,8 +57,8 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu implements 
     }
 
     @Unique
-    private static void setResultItemStack(ItemStack itemStack, ServerPlayer player, AbstractCraftingMenu menu){
-        menu.getResultSlot().set(itemStack);
+    private static void setResultItemStack(ItemStack itemStack, ServerPlayer player, AbstractContainerMenu menu, ResultContainer resultSlots){
+        resultSlots.setItem(0,itemStack);
         menu.setRemoteSlot(0, itemStack);
         player.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, itemStack));
     }
@@ -68,6 +68,7 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu implements 
     private static void slotChangedCraftingGrid(AbstractContainerMenu menu, ServerLevel level, Player player, CraftingContainer craftSlots, ResultContainer resultSlots, RecipeHolder<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack){
         resultItemStack=itemStack;
         if(!itemStack.isEmpty()){
+            setResultItemStack(ItemStack.EMPTY,(ServerPlayer) player,menu,resultSlots);
             craftingTicks=CraftingDifficultyProperties.getCraftingTicks(craftSlots.asCraftInput(), player.experienceLevel/*这里后面可以加addbuff*/);
             craftTickCount=0;
         }
