@@ -1,7 +1,7 @@
 package com.starkettle.mite_ctm.mixins;
 
-import com.starkettle.mite_ctm.utils.ICrafting;
-import com.starkettle.mite_ctm.utils.ITick;
+import com.starkettle.mite_ctm.utils.CraftTickable;
+import com.starkettle.mite_ctm.utils.Tickable;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.Optional;
 
 @Mixin(AbstractCraftingMenu.class)
-public abstract class AbstractCraftingMenuMixin extends RecipeBookMenu implements ITick, ICrafting {
+public abstract class AbstractCraftingMenuMixin extends RecipeBookMenu implements Tickable, CraftTickable {
     @Shadow @Final protected CraftingContainer craftSlots;
 
     @Shadow @Final protected ResultContainer resultSlots;

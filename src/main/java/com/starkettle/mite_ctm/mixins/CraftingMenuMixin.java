@@ -2,7 +2,7 @@ package com.starkettle.mite_ctm.mixins;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.starkettle.mite_ctm.items.CraftingDifficultyProperties;
-import com.starkettle.mite_ctm.utils.ICrafting;
+import com.starkettle.mite_ctm.utils.CraftTickable;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -22,7 +22,7 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu {
 
     @Inject(method = "slotChangedCraftingGrid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/ResultContainer;setItem(ILnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE), cancellable = true)
     private static void slotChangedCraftingGrid(AbstractContainerMenu menu, ServerLevel level, Player player, CraftingContainer craftSlots, ResultContainer resultSlots, RecipeHolder<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack){
-        if(menu instanceof ICrafting crafting){
+        if(menu instanceof CraftTickable crafting){
             crafting.setResultItemStack(itemStack);
             if(!itemStack.isEmpty()){
                 crafting.setResultSlotAndSendS2CPacket(ItemStack.EMPTY);

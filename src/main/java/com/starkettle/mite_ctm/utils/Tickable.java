@@ -1,5 +1,5 @@
 package com.starkettle.mite_ctm.utils;
 
-public interface ITick {
+public interface Tickable {
     void tick();
 }

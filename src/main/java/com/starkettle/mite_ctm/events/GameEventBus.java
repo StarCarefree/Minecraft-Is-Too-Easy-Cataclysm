@@ -4,7 +4,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
 import com.starkettle.mite_ctm.commands.StatsCommand;
-import com.starkettle.mite_ctm.utils.ITick;
+import com.starkettle.mite_ctm.utils.Tickable;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.util.Mth;
@@ -44,7 +44,7 @@ public class GameEventBus {
         else if(player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
             player.heal(1.0F);
         }
-        if(player.containerMenu instanceof ITick menu){
+        if(player.containerMenu instanceof Tickable menu){
             menu.tick();
         }
     }

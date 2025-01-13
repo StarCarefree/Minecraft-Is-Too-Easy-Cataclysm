@@ -2,7 +2,7 @@ package com.starkettle.mite_ctm.events;
 
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.keymappings.ModKeyMappings;
-import com.starkettle.mite_ctm.utils.ICrafting;
+import com.starkettle.mite_ctm.utils.CraftTickable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +29,7 @@ public class ClientGameEventBus {
     @SubscribeEvent
     public static void onContainerMenuRender(ContainerScreenEvent.Render.Foreground event) {
         if(event.getContainerScreen().getMenu() instanceof AbstractCraftingMenu menu) {
-            ICrafting crafting = (ICrafting) menu;
+            CraftTickable crafting = (CraftTickable) menu;
             if(!crafting.getResultItemStack().isEmpty()&&!menu.getResultSlot().hasItem()&&crafting.getCraftTickCount()<=crafting.getCraftingTicks()){
                 List<Slot> slots = menu.getInputGridSlots();
                 int minY = Integer.MAX_VALUE, maxX = 0, maxY = 0, textureWidth=24, textureHeight=16, resultOffset=6, arrowOffset=-1;

@@ -2,7 +2,7 @@ package com.starkettle.mite_ctm.utils;
 
 import net.minecraft.world.item.ItemStack;
 
-public interface ICrafting {
+public interface CraftTickable {
     int getCraftTickCount();
     int getCraftingTicks();
     void setCraftTickCount(int count);
