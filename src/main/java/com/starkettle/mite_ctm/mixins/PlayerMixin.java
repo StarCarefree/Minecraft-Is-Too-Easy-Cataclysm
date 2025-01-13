@@ -32,8 +32,10 @@ public abstract class PlayerMixin extends LivingEntity {
             this.experienceLevel=200;
             this.experienceProgress=0f;
             cir.setReturnValue(Integer.MAX_VALUE);
+        } else {
+            cir.setReturnValue(10*(this.experienceLevel+1));
         }
-        cir.setReturnValue(10*(this.experienceLevel+1));
+
     }
 
     @Inject(method = "attack" ,at = @At("HEAD"),cancellable = true)
@@ -45,6 +47,6 @@ public abstract class PlayerMixin extends LivingEntity {
 
     @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"),index = 1)
     public float attackMixin2(float f){//攻击力每级增加0.5%
-        return (float)(f*0.005*this.experienceLevel);
+        return f+f*0.005f*this.experienceLevel;
     }
 }

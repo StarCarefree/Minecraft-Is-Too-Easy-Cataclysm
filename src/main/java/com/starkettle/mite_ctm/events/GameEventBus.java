@@ -10,7 +10,6 @@ import net.minecraft.commands.Commands;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingMenu;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
@@ -45,8 +44,8 @@ public class GameEventBus {
         else if(player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
             player.heal(1.0F);
         }
-        if(player.containerMenu instanceof CraftingMenu menu){
-            ((ITick)menu).tick();
+        if(player.containerMenu instanceof ITick menu){
+            menu.tick();
         }
     }
     @SubscribeEvent

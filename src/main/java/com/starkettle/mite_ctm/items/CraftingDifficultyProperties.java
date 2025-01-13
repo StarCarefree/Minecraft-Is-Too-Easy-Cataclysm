@@ -1,6 +1,6 @@
 package com.starkettle.mite_ctm.items;
 
-import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.crafting.RecipeInput;
 
 public enum CraftingDifficultyProperties {
@@ -44,14 +44,15 @@ public enum CraftingDifficultyProperties {
             }
         }
         int craftTicks;
+        float buff=1f+addBuff;
         if(craftingDifficulty>100){
-            craftTicks=(int) Math.ceil(Math.pow(craftingDifficulty-100,0.8)+100);
+            craftTicks=Mth.ceil(Math.pow(craftingDifficulty-100,0.8)+100);
         } else {
-            craftTicks=(int) Math.ceil(Math.pow(craftingDifficulty,0.8));
+            craftTicks=Mth.ceil(Math.pow(craftingDifficulty,0.8));
         }
-        return (int) Math.ceil(craftTicks/(addBuff+((float) (2 * experienceLevel)/100)));
+        return Mth.ceil(craftTicks/(buff+((float) (2 * experienceLevel)/100)));
     }
     public static int getCraftingTicks(RecipeInput recipeInput, int experienceLevel){
-        return getCraftingTicks(recipeInput,experienceLevel,1.0f);
+        return getCraftingTicks(recipeInput,experienceLevel,0f);
     }
 }

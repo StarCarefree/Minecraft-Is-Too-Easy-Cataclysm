@@ -8,6 +8,7 @@
     "LocalPlayerMixin"
   ],
   "mixins": [
+    "AbstractCraftingMenuMixin",
     "BlockBehaviourMixin",
     "BlockBehaviourPropertiesAccessor",
     "CraftingMenuMixin",
@@ -16,5 +17,5 @@
   "injectors": {
     "defaultRequire": 1
   }
-  }
+}
   
