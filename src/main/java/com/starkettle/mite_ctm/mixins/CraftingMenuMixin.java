@@ -68,7 +68,7 @@ public abstract class CraftingMenuMixin extends AbstractCraftingMenu implements 
     private static void slotChangedCraftingGrid(AbstractContainerMenu menu, ServerLevel level, Player player, CraftingContainer craftSlots, ResultContainer resultSlots, RecipeHolder<CraftingRecipe> recipe, CallbackInfo ci, @Local ItemStack itemStack){
         resultItemStack=itemStack;
         if(!itemStack.isEmpty()){
-            craftingTicks=CraftingDifficultyProperties.getCraftingTicks(craftSlots.asCraftInput());
+            craftingTicks=CraftingDifficultyProperties.getCraftingTicks(craftSlots.asCraftInput(), player.experienceLevel/*这里后面可以加addbuff*/);
             craftTickCount=0;
         }
         ci.cancel();

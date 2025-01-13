@@ -34,7 +34,7 @@ public enum CraftingDifficultyProperties {
     CraftingDifficultyProperties(int craftingDifficulty){
         this.craftingDifficulty=craftingDifficulty;
     }
-    public static int getCraftingTicks(RecipeInput recipeInput){
+    public static int getCraftingTicks(RecipeInput recipeInput, int experienceLevel, float addBuff){
         int craftingDifficulty=0;
         for(int i=0;i<recipeInput.size();i++){
             try{
@@ -43,9 +43,15 @@ public enum CraftingDifficultyProperties {
             } catch (IllegalArgumentException ignored){
             }
         }
+        int craftTicks;
         if(craftingDifficulty>100){
-            return (int) Math.ceil(Math.pow(craftingDifficulty-100,0.8)+100);
+            craftTicks=(int) Math.ceil(Math.pow(craftingDifficulty-100,0.8)+100);
+        } else {
+            craftTicks=(int) Math.ceil(Math.pow(craftingDifficulty,0.8));
         }
-        return (int) Math.ceil(Math.pow(craftingDifficulty,0.8));
+        return (int) Math.ceil(craftTicks/(addBuff+((float) (2 * experienceLevel)/100)));
+    }
+    public static int getCraftingTicks(RecipeInput recipeInput, int experienceLevel){
+        return getCraftingTicks(recipeInput,experienceLevel,1.0f);
     }
 }
