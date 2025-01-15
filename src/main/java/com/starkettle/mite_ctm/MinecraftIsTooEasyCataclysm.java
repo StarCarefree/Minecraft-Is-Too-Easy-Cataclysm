@@ -1,5 +1,7 @@
 package com.starkettle.mite_ctm;
 
+import com.starkettle.mite_ctm.blocks.ModBlocks;
+import com.starkettle.mite_ctm.items.ModItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +15,8 @@ public class MinecraftIsTooEasyCataclysm {
     public static final Logger LOGGER = LogManager.getLogger("Minecraft Is Too Easy:Cataclysm");
 
     public MinecraftIsTooEasyCataclysm(IEventBus modEventBus, ModContainer modContainer) {
+        ModBlocks.BLOCKS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
         LOGGER.info("""
                 
                   __  __  _                                  __  _     _____        _______              ______                        _____        _                _                       \s
