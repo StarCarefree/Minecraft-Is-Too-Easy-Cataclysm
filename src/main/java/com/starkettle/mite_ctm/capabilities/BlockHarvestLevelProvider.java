@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.IBlockCapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.UnknownNullability;
 
 public class BlockHarvestLevelProvider implements IBlockCapabilityProvider<IBlockHarvestLevel,Void>, INBTSerializable<CompoundTag> {
     private IBlockHarvestLevel harvestLevel;
@@ -23,7 +23,7 @@ public class BlockHarvestLevelProvider implements IBlockCapabilityProvider<IBloc
     }
 
     @Override
-    public @Nullable IBlockHarvestLevel getCapability(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, Void context) {
+    public @Nullable IBlockHarvestLevel getCapability(@NotNull Level level, @NotNull BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, Void context) {
         String blockId=state.getBlockHolder().getKey().location().getPath();
         try{
             BlockProperties properties= BlockProperties.valueOf(blockId);
@@ -34,12 +34,12 @@ public class BlockHarvestLevelProvider implements IBlockCapabilityProvider<IBloc
     }
 
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         return getOrCreateCapability(null).serializeNBT(provider);
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag nbt) {
         getOrCreateCapability(null).deserializeNBT(provider, nbt);
     }
 }
