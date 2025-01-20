@@ -1,0 +1,5 @@
+{
+  "mite_ctm.mod_name": "Minecraft Is Too Easy：灾变",
+  "command.mite_ctm.stats": "§b§l游戏玩家信息:\n§a玩家名称:%s\n§c玩家UUID:%s\n§7----------------\n§6经验等级:%s\n§6经验总量:%s\n§7----------------\n§2植物营养素:%s\n§e蛋白质:%s",
+  "key.mite_ctm.zoom": "缩放视角"
+}
