@@ -35,7 +35,7 @@ public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
         setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResistance()+insulinResistance);
     }
     //将所有值减1
-    default void decrease1All(){
+    default void decreaseAllBy1(){
         setAll(getProtein()-1, getPhytonutrients()-1, getInsulinResistance()-1);
     }
 }

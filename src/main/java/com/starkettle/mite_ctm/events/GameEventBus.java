@@ -25,7 +25,7 @@ public class GameEventBus {
     public static void onPlayerTick(PlayerTickEvent.Post event){
         Player player=event.getEntity();
         Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER)).ifPresent((cap)->{
-            cap.decrease1All();
+            cap.decreaseAllBy1();
             cap.setMaxFoodLevel(Mth.clamp(6+player.experienceLevel/5*2,0,20));
             cap.setMaxSaturationLevel(Mth.clamp(6f+(float)player.experienceLevel/5*2,0f,20f));
             player.getFoodData().setFoodLevel(Mth.clamp(player.getFoodData().getFoodLevel(),0,cap.getMaxFoodLevel()));
