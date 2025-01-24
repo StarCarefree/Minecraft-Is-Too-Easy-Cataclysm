@@ -14,9 +14,9 @@ public class MinecraftIsTooEasyCataclysm {
     public static final String MOD_ID = "mite_ctm";
     public static final Logger LOGGER = LogManager.getLogger("Minecraft Is Too Easy:Cataclysm");
 
-    public MinecraftIsTooEasyCataclysm(IEventBus modEventBus, ModContainer modContainer) {
-        ModBlocks.BLOCKS.register(modEventBus);
-        ModItems.ITEMS.register(modEventBus);
+    public MinecraftIsTooEasyCataclysm(IEventBus modEventBus) {
+        ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
         LOGGER.info("""
                 
                   __  __  _                                  __  _     _____        _______              ______                        _____        _                _
