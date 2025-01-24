@@ -18,6 +18,6 @@ public abstract class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "hasEnoughFoodToStartSprinting", at = @At("RETURN"), cancellable = true)
     public  void hasEnoughFoodToStartSprinting(CallbackInfoReturnable<Boolean> cir){
-        cir.setReturnValue(true);
+        cir.setReturnValue(this.isPassenger()||this.foodData.getFoodLevel()>0);
     }
 }
