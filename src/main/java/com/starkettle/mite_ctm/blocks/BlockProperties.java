@@ -2,6 +2,7 @@ package com.starkettle.mite_ctm.blocks;
 
 //方块硬度及挖掘等级有关的数据
 public enum BlockProperties {
+    //请填block_hardness及harvest_level中的数值（按block_hardness中的排序顺序排序，若没有harvest_level则不填，有默认为0的构造函数的）
     //Minecraft原版方块
     stone(240f, 2),
     grass_block(50f),

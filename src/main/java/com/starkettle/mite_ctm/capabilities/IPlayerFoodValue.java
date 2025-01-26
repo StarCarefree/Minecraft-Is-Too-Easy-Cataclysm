@@ -17,25 +17,25 @@ public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
     //获取植物营养素值
     int getPhytonutrients();
     //获取胰岛素抵抗值
-    int getInsulinResistance();
+    int getInsulinResponse();
     //设置蛋白质值
     void setProtein(int protein);
     //设置植物营养素值
     void setPhytonutrients(int phytonutrients);
     //设置胰岛素抵抗值
-    void setInsulinResistance(int insulinResistance);
+    void setInsulinResponse(int insulinResponse);
     //设置所有值
-    default void setAll(int protein, int phytonutrients, int insulinResistance){
+    default void setAll(int protein, int phytonutrients, int insulinResponse){
         setProtein(protein);
         setPhytonutrients(phytonutrients);
-        setInsulinResistance(insulinResistance);
+        setInsulinResponse(insulinResponse);
     }
     //将所有值增加
-    default void increaseAll(int protein, int phytonutrients, int insulinResistance){
-        setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResistance()+insulinResistance);
+    default void increaseAll(int protein, int phytonutrients, int insulinResponse){
+        setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResponse()+insulinResponse);
     }
     //将所有值减1
     default void decreaseAllBy1(){
-        setAll(getProtein()-1, getPhytonutrients()-1, getInsulinResistance()-1);
+        setAll(getProtein()-1, getPhytonutrients()-1, getInsulinResponse()-1);
     }
 }

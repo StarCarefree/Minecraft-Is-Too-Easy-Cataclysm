@@ -2,6 +2,7 @@ package com.starkettle.mite_ctm.items;
 
 //工具挖掘等级相关数值
 public enum ToolProperties {
+    //请填harvest_level里面【工具】的挖掘等级
     //Minecraft工具
     air(1),//占位，代表空手
     iron_pickaxe(3),

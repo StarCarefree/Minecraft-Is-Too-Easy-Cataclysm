@@ -3,11 +3,14 @@ package com.starkettle.mite_ctm.events;
 import com.mojang.brigadier.CommandDispatcher;
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
+import com.starkettle.mite_ctm.capabilities.PlayerFoodValue;
 import com.starkettle.mite_ctm.commands.StatsCommand;
+import com.starkettle.mite_ctm.effects.ModEffects;
 import com.starkettle.mite_ctm.utils.Tickable;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,15 +37,18 @@ public class GameEventBus {
         player.getAttributes().getInstance(Attributes.MAX_HEALTH).setBaseValue(Math.min(20,6+player.experienceLevel/5*2));
         if(player.getFoodData().getFoodLevel()==0F){
             player.setSpeed(0.08F);
-        }
-        else{
+        } else{
             player.setSpeed(0.1F);
         }
-        if(player.tickCount%(64*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
+        if(!player.hasEffect(ModEffects.MALNOURISHED)&&player.tickCount%(64*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
+            player.heal(1.0F);
+        } else if (player.hasEffect(ModEffects.MALNOURISHED)&&player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
             player.heal(1.0F);
         }
-        else if(player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
-            player.heal(1.0F);
+        if(!player.hasEffect(ModEffects.MALNOURISHED)&&player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getPhytonutrients() <= PlayerFoodValue.MAX_PHYTONUTRIENTS*0.05 || player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getProtein() <= PlayerFoodValue.MAX_PROTEIN*0.05){
+            player.addEffect(new MobEffectInstance(ModEffects.MALNOURISHED));
+        } else if(player.hasEffect(ModEffects.MALNOURISHED)) {
+            player.removeEffect(ModEffects.MALNOURISHED);
         }
         if(player.containerMenu instanceof Tickable menu){
             menu.tick();

@@ -1,6 +1,7 @@
 package com.starkettle.mite_ctm;
 
 import com.starkettle.mite_ctm.blocks.ModBlocks;
+import com.starkettle.mite_ctm.effects.ModEffects;
 import com.starkettle.mite_ctm.items.ModItems;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,7 @@ public class MinecraftIsTooEasyCataclysm {
     public MinecraftIsTooEasyCataclysm(IEventBus modEventBus) {
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
+        ModEffects.register(modEventBus);
         LOGGER.info("""
                 
                   __  __  _                                  __  _     _____        _______              ______                        _____        _                _
