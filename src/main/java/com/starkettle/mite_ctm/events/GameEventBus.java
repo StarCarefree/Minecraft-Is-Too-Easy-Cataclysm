@@ -33,6 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class GameEventBus {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event){
+        //TODO: 当有Mal效果时，增加50%饥饿速度
         Player player=event.getEntity();
         Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER)).ifPresent((cap)->{
             cap.decreaseAllBy1();
