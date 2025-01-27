@@ -2,7 +2,6 @@ package com.starkettle.mite_ctm.capabilities;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import org.jetbrains.annotations.UnknownNullability;
 
 public class BlockHarvestLevel implements IBlockHarvestLevel{
     private int blockHarvestLevel;
@@ -17,7 +16,7 @@ public class BlockHarvestLevel implements IBlockHarvestLevel{
     }
 
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag compoundTag=new CompoundTag();
         compoundTag.putInt("blockHarvestLevel",blockHarvestLevel);
         return compoundTag;

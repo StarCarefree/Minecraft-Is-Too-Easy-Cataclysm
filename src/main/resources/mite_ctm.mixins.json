@@ -13,6 +13,7 @@
     "BlockBehaviourPropertiesAccessor",
     "CraftingMenuMixin",
     "FoodDataMixin",
+    "ItemMixin",
     "PlayerMixin"
   ],
   "injectors": {

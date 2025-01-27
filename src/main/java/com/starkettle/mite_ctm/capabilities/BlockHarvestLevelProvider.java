@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 public class BlockHarvestLevelProvider implements IBlockCapabilityProvider<IBlockHarvestLevel,Void>, INBTSerializable<CompoundTag> {
     private IBlockHarvestLevel harvestLevel;
 
-    public IBlockHarvestLevel getOrCreateCapability(BlockProperties properties){
+    public IBlockHarvestLevel getOrCreateCapability(@Nullable BlockProperties properties){
         if(harvestLevel==null){
             harvestLevel = new BlockHarvestLevel(properties==null?0:properties.harvestLevel);
         }

@@ -1,15 +1,18 @@
 package com.starkettle.mite_ctm.capabilities;
 
 import com.starkettle.mite_ctm.items.ToolProperties;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ToolHarvestLevelProvider implements ICapabilityProvider<ItemStack, Void, IToolHarvestLevel> {
+public class ToolHarvestLevelProvider implements ICapabilityProvider<ItemStack, Void, IToolHarvestLevel>, INBTSerializable<CompoundTag> {
     private IToolHarvestLevel harvestLevel;
 
-    public IToolHarvestLevel getOrCreateCapability(ToolProperties properties){
+    public IToolHarvestLevel getOrCreateCapability(@Nullable ToolProperties properties){
         if(harvestLevel==null){
             harvestLevel = new ToolHarvestLevel(properties==null?1:properties.harvestLevel);
         }
@@ -26,5 +29,15 @@ public class ToolHarvestLevelProvider implements ICapabilityProvider<ItemStack, 
         } catch (IllegalArgumentException e) {
             return getOrCreateCapability(null);
         }
+    }
+
+    @Override
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+        return harvestLevel.serializeNBT(provider);
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.@NotNull Provider provider, @NotNull CompoundTag nbt) {
+        harvestLevel.deserializeNBT(provider, nbt);
     }
 }

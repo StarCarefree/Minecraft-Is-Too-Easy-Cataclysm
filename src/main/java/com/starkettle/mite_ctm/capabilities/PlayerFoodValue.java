@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.UnknownNullability;
 
 public class PlayerFoodValue implements IPlayerFoodValue{
     public static final int MAX_PROTEIN = 160000, MAX_PHYTONUTRIENTS = 160000, MAX_INSULIN_RESPONSE = 192000;
@@ -63,7 +62,7 @@ public class PlayerFoodValue implements IPlayerFoodValue{
     }
 
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         CompoundTag compoundTag = new CompoundTag();
         compoundTag.putInt("insulinResponse", insulinResponse);
         compoundTag.putInt("phytonutrients", phytonutrients);

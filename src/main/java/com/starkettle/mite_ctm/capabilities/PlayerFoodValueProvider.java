@@ -7,7 +7,6 @@ import net.neoforged.neoforge.capabilities.ICapabilityProvider;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.UnknownNullability;
 
 public class PlayerFoodValueProvider implements ICapabilityProvider<Player,Void,IPlayerFoodValue>, INBTSerializable<CompoundTag> {
     private IPlayerFoodValue foodValue = null;
@@ -25,7 +24,7 @@ public class PlayerFoodValueProvider implements ICapabilityProvider<Player,Void,
     }
 
     @Override
-    public @UnknownNullability CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
+    public CompoundTag serializeNBT(HolderLookup.@NotNull Provider provider) {
         return getOrCreatePlayerFoodValue().serializeNBT(provider);
     }
 

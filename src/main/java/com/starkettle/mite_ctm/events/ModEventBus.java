@@ -2,10 +2,8 @@ package com.starkettle.mite_ctm.events;
 
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.blocks.BlockProperties;
-import com.starkettle.mite_ctm.capabilities.BlockHarvestLevelProvider;
-import com.starkettle.mite_ctm.capabilities.ModCapabilities;
-import com.starkettle.mite_ctm.capabilities.PlayerFoodValueProvider;
-import com.starkettle.mite_ctm.capabilities.ToolHarvestLevelProvider;
+import com.starkettle.mite_ctm.capabilities.*;
+import com.starkettle.mite_ctm.items.FoodProperties;
 import com.starkettle.mite_ctm.items.ToolProperties;
 import com.starkettle.mite_ctm.mixins.BlockBehaviourPropertiesAccessor;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -29,7 +27,7 @@ public class ModEventBus {
 
         for (Block block : BuiltInRegistries.BLOCK){
             try{
-                BlockProperties.valueOf(((BlockBehaviourPropertiesAccessor)block.properties()).getId().location().getPath());
+                BlockProperties.valueOf(BuiltInRegistries.BLOCK.wrapAsHolder(block).getKey().location().getPath());
                 event.registerBlock(
                         ModCapabilities.BLOCK_HARVEST_LEVEL_HANDLER,
                         new BlockHarvestLevelProvider(),
@@ -46,6 +44,15 @@ public class ModEventBus {
                 event.registerItem(
                         ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER,
                         new ToolHarvestLevelProvider(),
+                        item
+                );
+            } catch (IllegalArgumentException ignored) {
+            }
+            try{
+                FoodProperties.valueOf(itemStack.getItemHolder().getKey().location().getPath());
+                event.registerItem(
+                        ModCapabilities.FOOD_VALUE_HANDLER,
+                        new FoodValueProvider(),
                         item
                 );
             } catch (IllegalArgumentException ignored) {
