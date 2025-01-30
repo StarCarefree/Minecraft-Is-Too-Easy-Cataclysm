@@ -24,32 +24,38 @@ public class ModEventBus {
                 new PlayerFoodValueProvider()
         );
 
-        try{
-            for (Block block : BuiltInRegistries.BLOCK){
+        for (Block block : BuiltInRegistries.BLOCK){
+            try{
                 BlockProperties.valueOf(BuiltInRegistries.BLOCK.wrapAsHolder(block).getKey().location().getPath());
                 event.registerBlock(
                         ModCapabilities.BLOCK_HARVEST_LEVEL_HANDLER,
                         new BlockHarvestLevelProvider(),
                         block
                 );
+            } catch (IllegalArgumentException ignored) {
             }
+        }
 
-            for(Item item:BuiltInRegistries.ITEM){
-                ItemStack itemStack=new ItemStack(item);
+        for(Item item:BuiltInRegistries.ITEM){
+            ItemStack itemStack=new ItemStack(item);
+            try{
                 ToolProperties.valueOf(itemStack.getItemHolder().getKey().location().getPath());
                 event.registerItem(
                         ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER,
                         new ToolHarvestLevelProvider(),
                         item
                 );
+            } catch (IllegalArgumentException ignored) {
+            }
+            try{
                 FoodProperties.valueOf(itemStack.getItemHolder().getKey().location().getPath());
                 event.registerItem(
                         ModCapabilities.FOOD_VALUE_HANDLER,
                         new FoodValueProvider(),
                         item
                 );
+            } catch (IllegalArgumentException ignored) {
             }
-        } catch (IllegalArgumentException ignored){
         }
     }
 }
