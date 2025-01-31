@@ -11,10 +11,11 @@
     "AbstractCraftingMenuMixin",
     "BlockBehaviourMixin",
     "BlockBehaviourPropertiesAccessor",
-    "ConsumableMixin",
     "CraftingMenuMixin",
     "FoodDataMixin",
-    "PlayerMixin"
+    "ItemStackMixin",
+    "PlayerMixin",
+    "PoisonMobEffectMixin"
   ],
   "injectors": {
     "defaultRequire": 1

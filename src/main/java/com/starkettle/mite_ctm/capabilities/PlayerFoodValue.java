@@ -10,6 +10,17 @@ public class PlayerFoodValue implements IPlayerFoodValue{
 
     private int protein=MAX_PROTEIN, phytonutrients=MAX_PHYTONUTRIENTS, insulinResponse =0, maxFoodLevel=6;
     private float maxSaturationLevel=6f;
+    private boolean isIncreasingBlocked=false;
+
+    @Override
+    public void toggleIncreasingBlocked() {
+        isIncreasingBlocked=!isIncreasingBlocked;
+    }
+
+    @Override
+    public boolean isIncreasingBlocked() {
+        return isIncreasingBlocked;
+    }
 
     @Override
     public int getMaxFoodLevel() {

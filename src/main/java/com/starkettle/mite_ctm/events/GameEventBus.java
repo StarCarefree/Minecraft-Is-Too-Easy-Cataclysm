@@ -2,9 +2,7 @@ package com.starkettle.mite_ctm.events;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.capabilities.IPlayerFoodValue;
 import com.starkettle.mite_ctm.capabilities.ModCapabilities;
@@ -21,19 +19,23 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.event.entity.EntityEvent;
+import net.neoforged.neoforge.event.entity.living.ArmorHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @EventBusSubscriber(modid = MinecraftIsTooEasyCataclysm.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class GameEventBus {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event){
-        //TODO: 当有Mal效果时，增加50%饥饿速度
         Player player=event.getEntity();
         Optional.ofNullable(player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER)).ifPresent((cap)->{
             cap.decreaseAllBy1();
@@ -49,11 +51,7 @@ public class GameEventBus {
         } else {
             player.setSpeed(0.1F);
         }
-        if(!player.hasEffect(ModEffects.MALNOURISHED)&&player.tickCount%(64*20)==0&&player.getFoodData().getFoodLevel()>=playerFoodValue.getMaxFoodLevel()*0.5){
-            player.heal(1.0F);
-        } else if (player.hasEffect(ModEffects.MALNOURISHED)&&player.tickCount%(256*20)==0&&player.getFoodData().getFoodLevel()>=player.getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).getMaxFoodLevel()*0.5){
-            player.heal(1.0F);
-        }
+        //食物相关的重写到FoodDataMixin里了
         if(!player.hasEffect(ModEffects.MALNOURISHED)&&playerFoodValue.getPhytonutrients() <= PlayerFoodValue.MAX_PHYTONUTRIENTS*0.05 || playerFoodValue.getProtein() <= PlayerFoodValue.MAX_PROTEIN*0.05){
             player.addEffect(new MobEffectInstance(ModEffects.MALNOURISHED));
         } else if(player.hasEffect(ModEffects.MALNOURISHED)) {
@@ -90,7 +88,10 @@ public class GameEventBus {
         })).then(Commands.literal("set_insulin_response").then(Commands.argument("awa",IntegerArgumentType.integer(0,PlayerFoodValue.MAX_INSULIN_RESPONSE)).executes(context -> {
             context.getSource().getPlayer().getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).setInsulinResponse(context.getArgument("awa",Integer.class));
             return Command.SINGLE_SUCCESS;
-        }))));
+        }))).then(Commands.literal("add_all_by_1145").executes(context -> {
+            context.getSource().getPlayer().getCapability(ModCapabilities.PLAYER_FOOD_VALUE_HANDLER).increaseAll(1145,1145,1145);
+            return Command.SINGLE_SUCCESS;
+        })));
     }
     @SubscribeEvent
     public static void canHarvest(PlayerEvent.HarvestCheck event){
@@ -103,6 +104,26 @@ public class GameEventBus {
             Optional.ofNullable(event.getEntity().getMainHandItem().getCapability(ModCapabilities.TOOL_HARVEST_LEVEL_HANDLER)).ifPresent(
                     (cap2)-> hav2.set(cap2.getHarvestLevel()));
             event.setCanHarvest(hav1.get()<=hav2.get()&&vanilla);
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerAttack(AttackEntityEvent event){
+        Player player = event.getEntity();
+        if (player.getHealth() <= 1.0F||player.getFoodData().getFoodLevel() <= 0) {
+            event.setCanceled(true);
+        }
+    }
+    @SubscribeEvent
+    public static void onEntityDamage(LivingIncomingDamageEvent event){
+        if(event.getSource().getEntity() instanceof Player player){
+            event.setAmount(event.getAmount()*(1.0F+player.experienceLevel*0.005F));
+        }
+        if(event.getEntity() instanceof Player player){
+            Random random = new Random();
+            int randomInt = random.nextInt(21-player.experienceLevel/10);
+            if(player.getArmorValue()>event.getAmount()&&randomInt==0){
+                event.setAmount(0.0F);
+            }
         }
     }
 }

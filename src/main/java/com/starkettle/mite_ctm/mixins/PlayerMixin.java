@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class PlayerMixin extends LivingEntity {
     @Shadow public int experienceLevel;
 
-    @Shadow protected FoodData foodData;
-
     @Shadow public float experienceProgress;
 
     protected PlayerMixin(EntityType<? extends LivingEntity> type, Level level) {
@@ -41,17 +39,5 @@ public abstract class PlayerMixin extends LivingEntity {
     @Inject(method = "isReducedDebugInfo", at = @At("RETURN"), cancellable = true)
     public void isReducedDebugInfo(CallbackInfoReturnable<Boolean> cir){
         cir.setReturnValue(true);
-    }
-
-    @Inject(method = "attack" ,at = @At("HEAD"),cancellable = true)
-    public void attackMixin(Entity entity, CallbackInfo ci){//取消攻击
-        if (this.getHealth() <= 1.0F||this.foodData.getFoodLevel() <= 0) {
-            ci.cancel();
-        }
-    }
-
-    @ModifyArg(method = "attack", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"),index = 1)
-    public float attackMixin2(float f){//攻击力每级增加0.5%
-        return f+f*0.005f*this.experienceLevel;
     }
 }

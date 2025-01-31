@@ -4,6 +4,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
 public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
+    void toggleIncreasingBlocked();
+    //是否被禁止增加
+    boolean isIncreasingBlocked();
     //获取最大饥饿值
     int getMaxFoodLevel();
     //设置最大饥饿值
@@ -32,10 +35,13 @@ public interface IPlayerFoodValue extends INBTSerializable<CompoundTag> {
     }
     //将所有值增加
     default void increaseAll(int protein, int phytonutrients, int insulinResponse){
-        setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResponse()+insulinResponse);
+        if(!isIncreasingBlocked()){
+            setAll(getProtein()+protein, getPhytonutrients()+phytonutrients, getInsulinResponse()+insulinResponse);
+        }
+        toggleIncreasingBlocked();
     }
     //将所有值减1
     default void decreaseAllBy1(){
-        increaseAll(-1, -1, -1);
+        setAll(getProtein()-1, getPhytonutrients()-1, getInsulinResponse()-1);
     }
 }

@@ -3,10 +3,14 @@ package com.starkettle.mite_ctm.events;
 import com.starkettle.mite_ctm.MinecraftIsTooEasyCataclysm;
 import com.starkettle.mite_ctm.keymappings.ModKeyMappings;
 import com.starkettle.mite_ctm.utils.CraftTickable;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractCraftingMenu;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
@@ -14,6 +18,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.CalculatePlayerTurnEvent;
 import net.neoforged.neoforge.client.event.ContainerScreenEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent;
 
@@ -23,7 +28,7 @@ import java.util.List;
 @EventBusSubscriber(modid = MinecraftIsTooEasyCataclysm.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
 public class ClientGameEventBus {
     @SubscribeEvent
-    public static void onFovChanging(ViewportEvent.ComputeFov event) {
+    public static void onFovChange(ViewportEvent.ComputeFov event) {
         event.setFOV(ModKeyMappings.ZOOM_KEY_MAPPING.isDown()?30:event.getFOV());
     }
     @SubscribeEvent
@@ -50,6 +55,15 @@ public class ClientGameEventBus {
                 GuiGraphics guiGraphics = event.getGuiGraphics();
 
                 guiGraphics.blitSprite(RenderType::guiTextured, resourceLocation, textureWidth, textureHeight, 0, 0, maxX+17+resultOffset, Mth.ceil((maxY+17+minY)/2f-textureHeight/2f)+arrowOffset, pixels, textureHeight);
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void onPlayerTurn(CalculatePlayerTurnEvent event) {
+        if(Minecraft.getInstance().getCameraEntity() instanceof Player player) {
+            if(player.hasEffect(MobEffects.MOVEMENT_SLOWDOWN)) {
+                MobEffectInstance effect = player.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+                event.setMouseSensitivity(event.getMouseSensitivity()*(1.0F-Math.min(effect.getAmplifier()+1, 4)*0.2F));
             }
         }
     }
