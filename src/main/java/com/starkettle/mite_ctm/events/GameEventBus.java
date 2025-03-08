@@ -73,11 +73,18 @@ public class GameEventBus {
         else if(player.hasEffect(ModEffects.INSULIN_RESISTANCE)){
             player.removeEffect(ModEffects.INSULIN_RESISTANCE);
         }
+        double interactionRange = 1.5;
+        if(player.isCrouching()) {
+            interactionRange = player.getYRot()>=30?2:1;
+        }
+        player.getAttributes().getInstance(Attributes.BLOCK_INTERACTION_RANGE).setBaseValue(interactionRange);
 
         if(player.containerMenu instanceof Tickable menu){
             menu.tick();
         }
+
     }
+
     @SubscribeEvent
     public static void onCommandsRegistering(RegisterCommandsEvent event){
         CommandDispatcher<CommandSourceStack> dispatcher=event.getDispatcher();
